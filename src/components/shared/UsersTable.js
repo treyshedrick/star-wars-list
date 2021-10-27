@@ -17,12 +17,21 @@ const headers = [
     {name: 'Mass'},
 ];
 
-const UsersTable = ({usersRows}) => {
+const UsersTable = ({usersRows, count, fetchData}) => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [pagesVisited, setPagesVisited] = useState([0])
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const displayingSearch = usersRows?.length === 1
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const handleChangePage = async (event, newPage) => {
+    // Keeps track of pages visited so API does not need to fetch existing data
+    if(pagesVisited.includes(newPage)){
+      setPage(newPage);
+    } else {
+      await fetchData(newPage);
+      setPage(newPage);
+      setPagesVisited(pagesVisited.concat(newPage));
+    }
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -30,10 +39,16 @@ const UsersTable = ({usersRows}) => {
     setPage(0);
   };
 
-  const currentPageUsers = usersRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  const currentPageUsers = () => {
+    if(!displayingSearch){
+      return usersRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    } 
+      return usersRows;
+  }
 
-  const averageHeight = calculateAverage(currentPageUsers, "height");;
-  const averageMass = calculateAverage(currentPageUsers, "mass");;
+  console.log("CURRENT: ", currentPageUsers());
+  const averageHeight = calculateAverage(currentPageUsers(), "height");;
+  const averageMass = calculateAverage(currentPageUsers(), "mass");;
   
   return (
     <Paper sx={{ width: '90%' }}>
@@ -51,7 +66,7 @@ const UsersTable = ({usersRows}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {currentPageUsers
+            {currentPageUsers()
               .map((row,i) => {
                 return (
                   <TableRow hover key={`${row.name}_row_${i}`}>
@@ -77,15 +92,17 @@ const UsersTable = ({usersRows}) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[1, 5, 10]}
-        component="div"
-        count={usersRows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      {displayingSearch ? null :       
+        (<TablePagination
+          rowsPerPageOptions={[10]}
+          component="div"
+          count={count}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />)}
+
     </Paper>
   );
 }
