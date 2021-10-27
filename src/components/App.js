@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
-import Loading from './components/shared/Loading'
-import {fetchStarWarsUsers} from './services/starWarsApi';
-import UsersTable from './components/shared/UsersTable';
-import Search from './components/shared/Search';
+import Loading from './shared/Loading'
+import {fetchStarWarsUsers} from '../services/starWarsApi';
+import UsersTable from './shared/UsersTable';
+import Search from './shared/Search';
 
 function App() {
   const [users, setUsers] = useState(null);
