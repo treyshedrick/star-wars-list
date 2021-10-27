@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
+import Box from '@mui/material/Box';
 import {fetchStarWarsUsers} from './services/starWarsApi';
+import UsersTable from './components/shared/UsersTable';
 
 function App() {
   const [users, setUsers] = useState(null);
@@ -13,12 +15,12 @@ function App() {
     fetchData();
   },[])
 
-  console.log(users);
+  if(!users) return <Box>Loading...</Box>
 
   return (
-    <div className="App">
-
-    </div>
+    <Box className="App">
+      <UsersTable usersRows={users} />
+    </Box>
   );
 }
 
