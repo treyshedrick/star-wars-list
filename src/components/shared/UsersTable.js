@@ -43,7 +43,7 @@ const UsersTable = ({usersRows}) => {
             <TableRow>
               {headers.map((header,i) => (
                 <TableCell
-                  key={`${header.name}_${i}`}
+                  key={`${header.name}_header_${i}`}
                 >
                   {header.name}
                 </TableCell>
@@ -52,15 +52,10 @@ const UsersTable = ({usersRows}) => {
           </TableHead>
           <TableBody>
             {currentPageUsers
-              .map((row) => {
+              .map((row,i) => {
                 return (
-                  <TableRow hover tabIndex={-1} key={row.name}>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                      >
-                        {row.name}
-                      </TableCell>
+                  <TableRow hover key={`${row.name}_row_${i}`}>
+                      <TableCell>{row.name}</TableCell>
                       <TableCell>{row.gender}</TableCell>
                       <TableCell>{row.hair_color}</TableCell>
                       <TableCell>{row.height}</TableCell>
@@ -68,7 +63,7 @@ const UsersTable = ({usersRows}) => {
                   </TableRow>
                 );
               })}
-              <TableRow hover tabIndex={-1}>
+              <TableRow hover>
                 <TableCell />
                 <TableCell />
                 <TableCell align="right">Average:</TableCell>

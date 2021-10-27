@@ -13,7 +13,7 @@ export const calculateAverage = (users, avgRequested) => {
     // use reduce method to calculate average
     if(avgRequested === 'mass'){
         average = usersMass(users).reduce((prev, curr) => (prev + curr)) / users.length;
-    } else {
+    } else if(avgRequested === 'height'){
         average = usersHeight(users).reduce((prev, curr) => (prev + curr)) / users.length;
     }
     
