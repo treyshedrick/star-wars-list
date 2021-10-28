@@ -1,10 +1,10 @@
 const usersMass = (users) => {
-    const massArr = users.map(user => (parseInt(user.mass)));
+    const massArr = users.map(user => (parseInt(user.mass.replace(/,/g,''))));
     return massArr;
 }
 
 const usersHeight = users => {
-    const heightArr = users.map(user => (parseInt(user.height)));
+    const heightArr = users.map(user => (parseInt(user.height.replace(/,/g,''))));
     return heightArr;
 }
 
