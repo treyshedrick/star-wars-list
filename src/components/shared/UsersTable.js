@@ -46,7 +46,6 @@ const UsersTable = ({usersRows, count, fetchData}) => {
       return usersRows;
   }
 
-  console.log("CURRENT: ", currentPageUsers());
   const averageHeight = calculateAverage(currentPageUsers(), "height");;
   const averageMass = calculateAverage(currentPageUsers(), "mass");;
   
@@ -83,10 +82,10 @@ const UsersTable = ({usersRows, count, fetchData}) => {
                 <TableCell />
                 <TableCell align="right">Average:</TableCell>
                 <TableCell>
-                  {averageHeight}
+                  {isNaN(averageHeight) ? "N/A" : averageHeight}
                 </TableCell>
                 <TableCell>
-                  {averageMass}
+                  {isNaN(averageMass) ? "N/A" : averageMass}
                 </TableCell>
               </TableRow>
           </TableBody>
