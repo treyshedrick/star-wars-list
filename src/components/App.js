@@ -12,12 +12,8 @@ function App() {
 
   const fetchData = async (pageNumber) => {
     const fetchedUsers = await fetchStarWarsUsers(pageNumber);
-    if(users.length){
-      setUsers((users) => users.concat(fetchedUsers.results));
-    } else {
-      setUsers(fetchedUsers.results);
-    }
-    
+
+    setUsers((users) => users.concat(fetchedUsers.results));
     setCount(fetchedUsers.count);
   }
 

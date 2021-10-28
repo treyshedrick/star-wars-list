@@ -51,6 +51,8 @@ const UsersTable = ({usersRows, count, fetchData}) => {
 
   const averageHeight = calculateAverage(currentPageUsers(), "height");;
   const averageMass = calculateAverage(currentPageUsers(), "mass");;
+
+  const disabledNext = buttonDisabled || currentPageUsers().length < rowsPerPage
   
   return (
     <Paper sx={{ width: '90%' }}>
@@ -103,7 +105,7 @@ const UsersTable = ({usersRows, count, fetchData}) => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          nextIconButtonProps={{disabled: buttonDisabled}}
+          nextIconButtonProps={{disabled: disabledNext}}
         />)}
 
     </Paper>

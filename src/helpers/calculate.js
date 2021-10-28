@@ -4,7 +4,7 @@ export const calculateAverage = (users, avgRequested) => {
         if(number === "unknown"){
             return 0;
         }
-        return parseInt(number.replace(/,/g,''));
+        return parseFloat(number.replace(/,/g,''));
     });
 
     let average;
