@@ -10,7 +10,6 @@ const usersHeight = users => {
 
 export const calculateAverage = (users, avgRequested) => {
     const filteredUsers = users.filter(user => user[avgRequested] !== "unknown");
-    console.log(filteredUsers);
     let average;
 
     if(filteredUsers.length === 0){
