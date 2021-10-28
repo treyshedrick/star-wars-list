@@ -21,6 +21,7 @@ const UsersTable = ({usersRows, count, fetchData}) => {
   const [page, setPage] = useState(0);
   const [pagesVisited, setPagesVisited] = useState([0])
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const displayingSearch = usersRows?.length === 1
 
   const handleChangePage = async (event, newPage) => {
@@ -28,9 +29,11 @@ const UsersTable = ({usersRows, count, fetchData}) => {
     if(pagesVisited.includes(newPage)){
       setPage(newPage);
     } else {
+      setButtonDisabled(true);
       await fetchData(newPage);
       setPage(newPage);
       setPagesVisited(pagesVisited.concat(newPage));
+      setButtonDisabled(false);
     }
   };
 
@@ -100,6 +103,7 @@ const UsersTable = ({usersRows, count, fetchData}) => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          nextIconButtonProps={{disabled: buttonDisabled}}
         />)}
 
     </Paper>
