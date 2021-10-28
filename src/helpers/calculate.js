@@ -1,21 +1,19 @@
-const usersMass = (users) => {
-    const massArr = users.map(user => (parseInt(user.mass.replace(/,/g,''))));
-    return massArr;
-}
-
-const usersHeight = users => {
-    const heightArr = users.map(user => (parseInt(user.height.replace(/,/g,''))));
-    return heightArr;
-}
-
 export const calculateAverage = (users, avgRequested) => {
+    // maps numbers into own array and turns unknown values to 0 for average
+    const dataPoints = users.map(user => user[avgRequested]).map(number => {
+        if(number === "unknown"){
+            return 0;
+        }
+        return parseInt(number.replace(/,/g,''));
+    });
+
     let average;
-    // use reduce method to calculate average
-    if(avgRequested === 'mass'){
-        average = usersMass(users).reduce((prev, curr) => (prev + curr)) / users.length;
-    } else if(avgRequested === 'height'){
-        average = usersHeight(users).reduce((prev, curr) => (prev + curr)) / users.length;
+
+    if(dataPoints.length === 0){
+        average = NaN;
     }
+    // use reduce method to calculate average
+    average = dataPoints.reduce((prev, curr) => (prev + curr)) / dataPoints.length;
     
     return average
 }
